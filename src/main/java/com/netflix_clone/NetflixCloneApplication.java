@@ -1,13 +1,13 @@
-package com.neflix_clone;
+package com.netflix_clone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NeflixCloneApplication {
+public class NetflixCloneApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NeflixCloneApplication.class, args);
+		SpringApplication.run(NetflixCloneApplication.class, args);
 	}
 
 }
