@@ -1,14 +1,16 @@
 package com.mta.core.domain.response;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterResponse {
 
-   private String registerToken;
-   private String verifyToken;
-   private String userId;
+   private Long userId;
    private String email;
+   private boolean success;
+   private String message;
 }

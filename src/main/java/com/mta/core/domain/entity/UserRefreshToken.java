@@ -1,12 +1,16 @@
 package com.mta.core.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_fresh_token")
 public class UserRefreshToken {
     @Id

@@ -1,12 +1,18 @@
 package com.mta.core.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_info")
 public class UserInfo {
 
@@ -27,6 +33,19 @@ public class UserInfo {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "reg_dt", nullable = false)
-    private LocalDateTime regDt;
+    @Column(name = "reg_dt")
+    private Date regDt;
+
+    @Column(name = "update_dt")
+    private Date updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.regDt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
+    }
 }

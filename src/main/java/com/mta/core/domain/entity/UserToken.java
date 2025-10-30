@@ -1,12 +1,18 @@
 package com.mta.core.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.Builder.Default;
 
 import java.time.LocalDateTime;
 
-@Data
+
 @Entity
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_token")
 public class UserToken {
     @Id
@@ -18,6 +24,7 @@ public class UserToken {
     private LocalDateTime regDt;
 
     @Column(name = "expire_format", length = 8)
+    @Default
     private String expireFormat = "SECONDS";
 
     @Column(name = "expire_time", nullable = false)
