@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Something went wrong')}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<main class="page">
+    <h1>Something went wrong</h1>
+    <p class="muted">Please try again in a moment.</p>
+    <a class="btn btn--accent" th:href="@{/}">Back to Home</a>
+</main>
+</body>
+</html>

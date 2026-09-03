@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<section th:fragment="row(row)" class="row" th:if="${row != null and !row.items().isEmpty()}">
+    <div class="row__head">
+        <h2 th:text="${row.title()}">Row</h2>
+        <div class="row__controls">
+            <button type="button" class="row__arrow" data-row-prev aria-label="Previous">‹</button>
+            <button type="button" class="row__arrow" data-row-next aria-label="Next">›</button>
+        </div>
+    </div>
+    <div class="row__scroller" data-row-scroller>
+        <div th:each="item : ${row.items()}" th:insert="~{fragments/movie-card :: card(${item})}"></div>
+    </div>
+</section>
+</body>
+</html>

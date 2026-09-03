@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="flash" class="flash-stack">
+    <p class="toast toast--ok" th:if="${updated}">Saved.</p>
+    <p class="toast toast--ok" th:if="${passwordUpdated}">Password updated.</p>
+    <p class="toast toast--ok" th:if="${registered}">Account created. Sign in to start watching.</p>
+</div>
+</body>
+</html>

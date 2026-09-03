@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Sign in')}"></head>
+<body class="auth-page">
+<main class="auth-card">
+    <a class="nav__brand" th:href="@{/login}">StreamFlix</a>
+    <h1>Sign in</h1>
+    <p class="muted">Use your StreamFlix email to continue.</p>
+    <p class="toast toast--ok" th:if="${registered}">Account created. Sign in below.</p>
+    <p class="toast toast--ok" th:if="${param.logout}">You have been signed out.</p>
+    <p class="toast toast--err" th:if="${param.error}">Invalid email or password.</p>
+    <form class="form" th:action="@{/login}" method="post">
+        <label>Email
+            <input type="email" name="username" autocomplete="username" required autofocus>
+        </label>
+        <label>Password
+            <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+        <button class="btn btn--accent" type="submit">Sign in</button>
+    </form>
+    <p class="muted">New to StreamFlix? <a th:href="@{/register}">Create an account</a></p>
+    <p class="hint">Demo: <strong>user1@streamflix.local</strong> / <strong>streamflix</strong></p>
+</main>
+</body>
+</html>

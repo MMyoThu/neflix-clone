@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Who is watching?')}"></head>
+<body class="auth-page">
+<main class="profile-select">
+    <h1>Who is watching?</h1>
+    <div class="profile-grid">
+        <form th:each="p : ${profiles}" th:action="@{/profiles/{id}/select(id=${p.id})}" method="post">
+            <button type="submit" class="profile-tile">
+                <img th:src="${p.avatarUrl}" th:alt="${p.profileName}">
+                <span th:text="${p.profileName}">Name</span>
+            </button>
+        </form>
+    </div>
+    <form class="form" th:action="@{/profiles}" method="post">
+        <h2>Add a profile</h2>
+        <label>Name
+            <input type="text" name="profileName" required maxlength="100">
+        </label>
+        <select name="avatarUrl">
+            <option th:each="avatar : ${avatars}" th:value="${avatar}" th:text="${avatar}">Avatar</option>
+        </select>
+        <button class="btn btn--accent" type="submit">Create profile</button>
+    </form>
+    <p><a th:href="@{/}">Back to Home</a></p>
+</main>
+</body>
+</html>

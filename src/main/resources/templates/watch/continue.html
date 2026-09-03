@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Continue Watching')}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<main class="page">
+    <h1>Continue Watching</h1>
+    <p class="empty" th:if="${items.isEmpty()}">Nothing in progress yet. Start a title to pick up later.</p>
+    <div class="grid" th:unless="${items.isEmpty()}">
+        <div th:each="item : ${items}" th:insert="~{fragments/movie-card :: card(${item})}"></div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,12 @@
+.git
+.idea
+.vscode
+target
+*.iml
+.env
+.env.local
+README.md
+docs
+.mvn/wrapper/maven-wrapper.jar
+**/.DS_Store
+**/Thumbs.db

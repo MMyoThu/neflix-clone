@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${title})}"></head>
+<body class="player-page">
+<header class="player-bar">
+    <a th:href="${backHref}">← Back</a>
+    <h1 th:text="${title}">Watch</h1>
+</header>
+<div class="player-wrap">
+    <video id="player"
+           controls
+           autoplay
+           playsinline
+           preload="auto"
+           th:poster="${posterUrl}"
+           th:src="${videoUrl}"
+           th:attr="data-progress-url=${progressUrl}, data-start=${progressSeconds}">
+        Your browser does not support HTML5 video.
+    </video>
+    <p class="player-error" data-player-error hidden>
+        This video could not start. Use a direct <strong>.mp4</strong> (H.264) URL, or put a file in
+        <code>static/videos</code> and set <code>video_url</code> to <code>/videos/your-file.mp4</code>.
+    </p>
+</div>
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/watch.js}"></script>
+</body>
+</html>

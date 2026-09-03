@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:streamflix}
+    username: ${DB_USERNAME:streamflix}
+    password: ${DB_PASSWORD:streamflix_dev_only}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 10000
+  jpa:
+    show-sql: true
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+
+logging:
+  level:
+    com.example.streamflix: DEBUG

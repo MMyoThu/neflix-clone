@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Profile')}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<main class="page profile-page">
+    <div th:replace="~{fragments/flash-message :: flash}"></div>
+    <h1>Account</h1>
+    <form class="form form--wide" th:action="@{/profile}" th:object="${profileForm}" method="post">
+        <label>First name
+            <input type="text" th:field="*{firstName}">
+            <span class="field-error" th:errors="*{firstName}"></span>
+        </label>
+        <label>Last name
+            <input type="text" th:field="*{lastName}">
+            <span class="field-error" th:errors="*{lastName}"></span>
+        </label>
+        <label>Profile name
+            <input type="text" th:field="*{profileName}">
+            <span class="field-error" th:errors="*{profileName}"></span>
+        </label>
+        <p>Avatar</p>
+        <div class="avatars">
+            <label th:each="avatar : ${avatars}">
+                <input type="radio" th:field="*{avatarUrl}" th:value="${avatar}">
+                <img th:src="${avatar}" alt="Avatar">
+            </label>
+        </div>
+        <button class="btn btn--accent" type="submit">Save</button>
+    </form>
+    <h2>Change password</h2>
+    <form class="form form--wide" th:action="@{/profile/password}" th:object="${passwordForm}" method="post">
+        <label>Current password
+            <input type="password" th:field="*{currentPassword}">
+            <span class="field-error" th:errors="*{currentPassword}"></span>
+        </label>
+        <label>New password
+            <input type="password" th:field="*{newPassword}" minlength="8">
+            <span class="field-error" th:errors="*{newPassword}"></span>
+        </label>
+        <button class="btn btn--ghost" type="submit">Update password</button>
+    </form>
+    <h2>Watch history</h2>
+    <p class="empty" th:if="${history.isEmpty()}">No titles watched yet.</p>
+    <div class="grid" th:unless="${history.isEmpty()}">
+        <div th:each="item : ${history}" th:insert="~{fragments/movie-card :: card(${item})}"></div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/profile.js}"></script>
+</body>
+</html>

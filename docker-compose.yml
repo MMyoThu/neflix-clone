@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: streamflix-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-streamflix}
+      POSTGRES_USER: ${DB_USERNAME:-streamflix}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-streamflix_dev_only}
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - streamflix_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-streamflix} -d ${DB_NAME:-streamflix}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  streamflix:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: streamflix-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SERVER_PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-streamflix}
+      DB_USERNAME: ${DB_USERNAME:-streamflix}
+      DB_PASSWORD: ${DB_PASSWORD:-streamflix_dev_only}
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    restart: unless-stopped
+
+volumes:
+  streamflix_pgdata:

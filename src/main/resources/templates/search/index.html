@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Search')}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<main class="page">
+    <h1 th:if="${q == null or q.isBlank()}">Search</h1>
+    <h1 th:unless="${q == null or q.isBlank()}" th:text="'Results for “' + ${q} + '”'">Results</h1>
+    <form class="filters" method="get" th:action="@{/search}">
+        <input type="search" name="q" placeholder="Search movies and TV shows" th:value="${q}" autofocus>
+        <button class="btn btn--ghost" type="submit">Search</button>
+    </form>
+    <p class="empty" th:if="${empty}">No results found. Try another title.</p>
+    <section th:if="${movies != null and !movies.isEmpty()}">
+        <h2>Movies</h2>
+        <div class="grid">
+            <div th:each="item : ${movies}" th:insert="~{fragments/movie-card :: card(${item})}"></div>
+        </div>
+    </section>
+    <section th:if="${shows != null and !shows.isEmpty()}">
+        <h2>TV Shows</h2>
+        <div class="grid">
+            <div th:each="item : ${shows}" th:insert="~{fragments/movie-card :: card(${item})}"></div>
+        </div>
+    </section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

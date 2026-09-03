@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav th:fragment="navbar" class="nav" aria-label="Main">
+    <a class="nav__brand" th:href="@{/}">StreamFlix</a>
+    <button class="nav__toggle" type="button" aria-label="Menu" data-nav-toggle>☰</button>
+    <div class="nav__panel" data-nav-panel>
+        <ul class="nav__links">
+            <li><a th:href="@{/}" th:classappend="${navActive == 'home'} ? ' is-active'">Home</a></li>
+            <li><a th:href="@{/movies}" th:classappend="${navActive == 'movies'} ? ' is-active'">Movies</a></li>
+            <li><a th:href="@{/tv}" th:classappend="${navActive == 'tv'} ? ' is-active'">TV Shows</a></li>
+            <li><a th:href="@{/my-list}" th:classappend="${navActive == 'my-list'} ? ' is-active'">My List</a></li>
+        </ul>
+        <form class="nav__search" th:action="@{/search}" method="get" role="search">
+            <input type="search" name="q" placeholder="Search" th:value="${q}" autocomplete="off" data-search-input>
+            <div class="nav__suggest" data-search-suggest hidden></div>
+        </form>
+        <div class="nav__account" sec:authorize="isAuthenticated()">
+            <a class="nav__profile" th:href="@{/profile}" th:text="${currentProfileName} ?: 'Profile'">Profile</a>
+            <a class="nav__muted" th:href="@{/profiles}">Switch</a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

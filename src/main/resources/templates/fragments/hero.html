@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<section th:fragment="hero(hero)" class="hero" th:if="${hero != null}"
+         th:style="'background-image:linear-gradient(to right, rgba(10,10,10,.92) 20%, rgba(10,10,10,.25)), url(' + ${hero.backdropUrl()} + ')'">
+    <div class="hero__copy">
+        <p class="hero__kicker">Featured</p>
+        <h1 th:text="${hero.title()}">Title</h1>
+        <p class="hero__meta">
+            <span th:text="${hero.releaseYear()}">2024</span>
+            <span th:text="${hero.maturityRating()}">PG-13</span>
+            <span th:if="${hero.durationMinutes() != null}" th:text="${hero.durationMinutes()} + ' min'">120 min</span>
+        </p>
+        <p class="hero__desc" th:text="${hero.description()}">Description</p>
+        <div class="hero__actions">
+            <a class="btn btn--light" th:href="${hero.watchHref()}">Watch Now</a>
+            <a class="btn btn--ghost" th:href="${hero.detailsHref()}">More Info</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

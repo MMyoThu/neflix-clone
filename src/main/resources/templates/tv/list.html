@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('TV Shows')}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<main class="page">
+    <header class="page__head">
+        <h1>TV Shows</h1>
+        <form class="filters" method="get" th:action="@{/tv}">
+            <input type="search" name="q" placeholder="Search shows" th:value="${q}">
+            <select name="genre">
+                <option value="">All genres</option>
+                <option th:each="g : ${genres}" th:value="${g.name}" th:text="${g.name}"
+                        th:selected="${g.name == genre}"></option>
+            </select>
+            <select name="sort">
+                <option value="latest" th:selected="${sort == null or sort == 'latest'}">Latest</option>
+                <option value="title" th:selected="${sort == 'title'}">Title</option>
+            </select>
+            <button class="btn btn--ghost" type="submit">Filter</button>
+        </form>
+    </header>
+    <div class="grid">
+        <div th:each="item : ${page.content}" th:insert="~{fragments/movie-card :: card(${item})}"></div>
+    </div>
+    <nav class="pager" th:if="${page.totalPages > 1}">
+        <a th:if="${!page.first}" th:href="@{/tv(page=${page.number - 1}, size=${page.size}, q=${q}, genre=${genre}, sort=${sort})}">Previous</a>
+        <span th:text="'Page ' + (${page.number + 1}) + ' of ' + ${page.totalPages}">Page</span>
+        <a th:if="${!page.last}" th:href="@{/tv(page=${page.number + 1}, size=${page.size}, q=${q}, genre=${genre}, sort=${sort})}">Next</a>
+    </nav>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

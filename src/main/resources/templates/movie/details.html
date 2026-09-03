@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${movie.title})}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<section class="detail" th:style="'background-image:linear-gradient(to right, rgba(10,10,10,.92), rgba(10,10,10,.35)), url(' + ${movie.backdropUrl} + ')'">
+    <img class="detail__poster" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+    <div class="detail__copy">
+        <h1 th:text="${movie.title}">Title</h1>
+        <p class="hero__meta">
+            <span th:text="${movie.releaseYear}">2024</span>
+            <span th:text="${movie.durationMinutes} + ' min'">120 min</span>
+            <span th:text="${movie.maturityRating}">PG-13</span>
+            <span th:each="g : ${movie.genres}" th:text="${g.name}">Genre</span>
+        </p>
+        <p th:text="${movie.description}">Description</p>
+        <p class="muted">
+            Average
+            <strong th:text="${averageRating != null} ? ${#numbers.formatDecimal(averageRating, 1, 1)} : '—'">—</strong>
+            (<span th:text="${ratingCount}">0</span> ratings)
+        </p>
+        <div class="hero__actions">
+            <a class="btn btn--light" th:href="@{/watch/movie/{id}(id=${movie.id})}">Watch</a>
+            <a class="btn btn--ghost" th:href="${movie.trailerUrl}" target="_blank" rel="noopener">Trailer</a>
+            <button type="button" class="btn btn--ghost" data-mylist-toggle
+                    th:attr="data-id=${movie.id}, data-type='MOVIE', aria-pressed=${inMyList}"
+                    th:text="${inMyList} ? 'Remove from My List' : 'Add to My List'">Add</button>
+        </div>
+        <form class="stars" data-rating-form th:attr="data-url=@{/api/ratings/movie/{id}(id=${movie.id})}">
+            <span>Your rating</span>
+            <button type="button" th:each="n : ${#numbers.sequence(1,5)}" th:text="${n}"
+                    th:classappend="${userRating != null and userRating >= n} ? ' is-on'"
+                    th:attr="data-rating=${n}"></button>
+        </form>
+    </div>
+</section>
+<section class="page" th:if="${!related.isEmpty()}">
+    <h2>More Like This</h2>
+    <div class="grid">
+        <div th:each="item : ${related}" th:insert="~{fragments/movie-card :: card(${item})}"></div>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/profile.js}"></script>
+</body>
+</html>

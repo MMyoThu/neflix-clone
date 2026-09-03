@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('My List')}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<main class="page">
+    <h1>My List</h1>
+    <p class="empty" th:if="${items.isEmpty()}">Your list is empty. Add titles from Home, Movies, or TV Shows.</p>
+    <div class="grid" th:unless="${items.isEmpty()}">
+        <div th:each="item : ${items}" th:insert="~{fragments/movie-card :: card(${item})}"></div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

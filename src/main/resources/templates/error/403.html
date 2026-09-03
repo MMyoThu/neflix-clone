@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Access denied')}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<main class="page">
+    <h1>Access denied</h1>
+    <p class="muted">You do not have permission to view this page.</p>
+    <a class="btn btn--accent" th:href="@{/}">Back to Home</a>
+</main>
+</body>
+</html>

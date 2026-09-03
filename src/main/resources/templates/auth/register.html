@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Create account')}"></head>
+<body class="auth-page">
+<main class="auth-card">
+    <a class="nav__brand" th:href="@{/login}">StreamFlix</a>
+    <h1>Create an account</h1>
+    <p class="muted">Start watching original demo titles in minutes.</p>
+    <form class="form" th:action="@{/register}" th:object="${registerForm}" method="post">
+        <label>First name
+            <input type="text" th:field="*{firstName}" required>
+            <span class="field-error" th:errors="*{firstName}"></span>
+        </label>
+        <label>Last name
+            <input type="text" th:field="*{lastName}" required>
+            <span class="field-error" th:errors="*{lastName}"></span>
+        </label>
+        <label>Email
+            <input type="email" th:field="*{email}" required>
+            <span class="field-error" th:errors="*{email}"></span>
+        </label>
+        <label>Password
+            <input type="password" th:field="*{password}" minlength="8" required>
+            <span class="field-error" th:errors="*{password}"></span>
+        </label>
+        <button class="btn btn--accent" type="submit">Sign up</button>
+    </form>
+    <p class="muted">Already have an account? <a th:href="@{/login}">Sign in</a></p>
+</main>
+</body>
+</html>

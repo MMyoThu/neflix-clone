@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${show.title})}"></head>
+<body class="app">
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<section class="detail" th:style="'background-image:linear-gradient(to right, rgba(10,10,10,.92), rgba(10,10,10,.35)), url(' + ${show.backdropUrl} + ')'">
+    <img class="detail__poster" th:src="${show.posterUrl}" th:alt="${show.title}">
+    <div class="detail__copy">
+        <h1 th:text="${show.title}">Title</h1>
+        <p class="hero__meta">
+            <span th:text="${show.releaseYear}">2024</span>
+            <span th:text="${show.maturityRating}">TV-14</span>
+            <span th:each="g : ${show.genres}" th:text="${g.name}">Genre</span>
+        </p>
+        <p th:text="${show.description}">Description</p>
+        <p class="muted">
+            Average
+            <strong th:text="${averageRating != null} ? ${#numbers.formatDecimal(averageRating, 1, 1)} : '—'">—</strong>
+            (<span th:text="${ratingCount}">0</span> ratings)
+        </p>
+        <div class="hero__actions">
+            <a class="btn btn--ghost" th:href="${show.trailerUrl}" target="_blank" rel="noopener">Trailer</a>
+            <button type="button" class="btn btn--ghost" data-mylist-toggle
+                    th:attr="data-id=${show.id}, data-type='TV', aria-pressed=${inMyList}"
+                    th:text="${inMyList} ? 'Remove from My List' : 'Add to My List'">Add</button>
+        </div>
+        <form class="stars" data-rating-form th:attr="data-url=@{/api/ratings/tv/{id}(id=${show.id})}">
+            <span>Your rating</span>
+            <button type="button" th:each="n : ${#numbers.sequence(1,5)}" th:text="${n}"
+                    th:classappend="${userRating != null and userRating >= n} ? ' is-on'"
+                    th:attr="data-rating=${n}"></button>
+        </form>
+    </div>
+</section>
+<section class="page" th:if="${!show.seasons.isEmpty()}">
+    <div class="season-tabs">
+        <a th:each="season : ${show.seasons}"
+           th:href="@{/tv/{id}(id=${show.id}, season=${season.seasonNumber})}"
+           th:classappend="${selectedSeason != null and selectedSeason.id == season.id} ? ' is-active'"
+           th:text="'Season ' + ${season.seasonNumber}">Season 1</a>
+    </div>
+    <div class="episodes" th:if="${selectedSeason != null}">
+        <a class="episode" th:each="ep : ${selectedSeason.episodes}" th:href="@{/watch/episode/{id}(id=${ep.id})}">
+            <img th:src="${ep.thumbnailUrl}" th:alt="${ep.title}" loading="lazy">
+            <div>
+                <h3 th:text="${ep.episodeNumber} + '. ' + ${ep.title}">Episode</h3>
+                <p th:text="${ep.description}">Description</p>
+                <span class="muted" th:text="${ep.durationMinutes} + ' min'">42 min</span>
+            </div>
+        </a>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/profile.js}"></script>
+</body>
+</html>

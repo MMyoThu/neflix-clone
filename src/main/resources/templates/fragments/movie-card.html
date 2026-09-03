@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<article th:fragment="card(item)" class="card" th:attr="data-id=${item.id()}, data-type=${item.type().name()}">
+    <div class="card__media">
+        <a th:href="${item.detailsHref()}">
+            <img class="card__poster" th:src="${item.posterUrl()}" th:alt="${item.title()}" loading="lazy">
+        </a>
+        <div class="card__overlay">
+            <p class="card__title" th:text="${item.title()}">Title</p>
+            <p class="card__meta">
+                <span th:text="${item.releaseYear()}">2024</span>
+                <span th:if="${item.durationMinutes() != null}" th:text="${item.durationMinutes()} + 'm'">120m</span>
+                <span th:text="${item.maturityRating()}">PG-13</span>
+            </p>
+            <div class="card__actions">
+                <a class="icon-btn" th:href="${item.watchHref()}" aria-label="Play">▶</a>
+                <button type="button" class="icon-btn" data-mylist-toggle
+                        th:attr="aria-pressed=${item.inMyList()}"
+                        th:text="${item.inMyList()} ? '✓' : '+'">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="card__progress" th:if="${item.progressPercent() != null}">
+        <span th:style="'width:' + ${item.progressPercent()} + '%'"></span>
+    </div>
+</article>
+</body>
+</html>
